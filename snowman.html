@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<title> Claude's Workshop Website </title>
+<link rel="stylesheet" href="style1.css" text="text/css">
+<html>
+<head>
+</head>
+<body>
+<div class="page">
+<header>
+<h1 class ="Lime" style="text-align:center"><strong> Snowman's Page </strong></h1>
+</header>
+<nav>
+<div class="button"><a class="Links" href="CU4005 Game Design/design.html">Game Design</a></div>
+<div class="button"><a class="Links" href="CU4006 Game Portofolio 1/programming.html">Game Portofolio</a></div>
+<div class="button"><a class="Links" href="CU4007 Computer Gaming Hardware Architecture/architecture.html">Hardware Architecture</a></div>
+<div class="button"><a class="Links" href="about.html">About</a></div>
+<div class="button"><a class="Links" href="contact.html">Contact</a></div>
+</nav>
+</br>
+<p class="text"><strong></strong><p>
+<p class="text2"><strong>Click <a class="Links" href="index.html">here</a> to return to the home page.</strong></p>
+</div>					
+<p class="text"><strong></strong><p>
+<canvas id="verygood" width="1887" height="640"></canvas>
+<script>
+
+var canvas = document.getElementById("verygood");
+ctx = canvas.getContext("2d");
+
+var SnowCanvasWidth = 490;
+var SnowCanvasLength = 640;
+var SnowCanvasX = 1397;
+var SnowCanvasY = 0;
+
+var SnowPathBeginX = 1409;
+var SnowPathBeginY = 20;
+var SnowPathLineX1 = 1667;
+var SnowPathLineY1 = 600;
+var SnowPathLineX2 = 1867;
+var SnowPathLineY2 = 600;
+
+var LineWidth = 9;
+
+var TreeTriangle1DotX1 = 1808;
+var TreeTriangle1DotY1 = 217;
+var TreeTriangle1DotX2 = 1840;
+var TreeTriangle1DotY2 = 268;
+var TreeTriangle1DotX3 = 1776;
+var TreeTriangle1DotY3 = 268;
+
+var TreeTriangle2DotX1 = 1808;
+var TreeTriangle2DotY1 = 275;
+var TreeTriangle2DotX2 = 1853;
+var TreeTriangle2DotY2 = 342;
+var TreeTriangle2DotX3 = 1766;
+var TreeTriangle2DotY3 = 342;
+
+var TreeTriangle3DotX1 = 1808;
+var TreeTriangle3DotY1 = 349;
+var TreeTriangle3DotX2 = 1876;
+var TreeTriangle3DotY2 = 426;
+var TreeTriangle3DotX3 = 1749;
+var TreeTriangle3DotY3 = 426;
+
+var TrunkX = 1795;
+var TrunkY = 429;
+var TrunkWidth = 30;
+var TrunkLength = 75;
+var SnowX = 0;
+var SnowY = 0;
+
+
+var SnowmanCircle1X1;
+var SnowmanCircle1Y1;
+var SnowmanCircle1Rad;
+var SnowmanCircle1Angle;
+var SnowmanCircle2X1;
+var SnowmanCircle2Y1;
+var SnowmanCircle2Rad;
+var SnowmanCircle2Angle;
+var SnowmanCircle3X1;
+var SnowmanCircle3Y1;
+var SnowmanCircle3Rad;
+var SnowmanCircle3Angle;
+function Snowman(SnowX, SnowY)
+{
+SnowmanCircle1X1 = SnowX + 1589;
+SnowmanCircle1Y1 = SnowY + 216;
+SnowmanCircle1Rad = 54;
+SnowmanCircle1Angle = 0;
+SnowmanCircle2X1 = SnowX + 1589;
+SnowmanCircle2Y1 = SnowY + 116;
+SnowmanCircle2Rad = 42;
+SnowmanCircle2Angle = 0;
+SnowmanCircle3X1 = SnowX + 1589;
+SnowmanCircle3Y1 = SnowY + 41;
+SnowmanCircle3Rad = 30;
+SnowmanCircle3Angle = 0;
+
+ctx.fillStyle = "white";
+ctx.strokeStyle = "black";
+ctx.beginPath();
+ctx.arc(SnowmanCircle1X1, SnowmanCircle1Y1, SnowmanCircle1Rad, SnowmanCircle1Angle, Math.PI*2, true);
+ctx.stroke();
+ctx.fill();
+
+ctx.fillStyle = "white";
+ctx.strokeStyle = "black";
+ctx.beginPath();
+ctx.arc(SnowmanCircle2X1, SnowmanCircle2Y1, SnowmanCircle2Rad, SnowmanCircle2Angle, Math.PI*2, true);
+ctx.stroke();
+ctx.fill();
+
+ctx.fillStyle = "white";
+ctx.strokeStyle = "black";
+ctx.beginPath();
+ctx.arc(SnowmanCircle3X1, SnowmanCircle3Y1, SnowmanCircle3Rad, SnowmanCircle3Angle, Math.PI*2, true);
+ctx.stroke();
+ctx.fill();
+}
+
+function clearthings()
+{
+
+ctx.clearRect(0, 0, GameWidth, GameLength);
+}
+
+function drawthings()
+{
+Snowman(0, 0);
+drawtext();
+}
+
+function drawtext()
+{
+
+ctx.font = "17px Comic Sans MS";
+ctx.fillStyle = "#1398A5";
+ctx.fillText("The picture to the right represents a snowman next to a snow path leading to a snow tree that I have drawn using Java Script and a keyboard. I would recommend to take a ",10,50);
+
+ctx.font = "17px Comic Sans MS";
+ctx.fillStyle = "#1398A5";
+ctx.fillText("moment to appreciate the level of genius that went into this picture:",10,70);
+}
+
+
+ctx.fillStyle = "cyan";
+ctx.fillRect(SnowCanvasX, SnowCanvasY, SnowCanvasWidth, SnowCanvasLength);
+
+ctx.strokeStyle = "black";
+ctx.fillStyle = "white";
+ctx.beginPath();
+ctx.moveTo(SnowPathBeginX, SnowPathBeginY);
+ctx.lineTo(SnowPathLineX1, SnowPathLineY1); 
+ctx.lineTo(SnowPathLineX2, SnowPathLineY2);
+ctx.closePath();
+ctx.lineWidth = LineWidth;
+ctx.stroke();
+ctx.fill();
+
+ctx.strokeStyle = "black";
+ctx.fillStyle = "green";
+ctx.beginPath();
+ctx.moveTo(TreeTriangle1DotX1, TreeTriangle1DotY1);
+ctx.lineTo(TreeTriangle1DotX2, TreeTriangle1DotY2);
+ctx.lineTo(TreeTriangle1DotX3, TreeTriangle1DotY3);
+ctx.closePath();
+ctx.lineWidth = LineWidth;
+ctx.stroke();
+ctx.fill();
+
+ctx.strokeStyle = "black";
+ctx.fillStyle = "green";
+ctx.beginPath();
+ctx.moveTo(TreeTriangle2DotX1, TreeTriangle2DotY1);
+ctx.lineTo(TreeTriangle2DotX2, TreeTriangle2DotY2);
+ctx.lineTo(TreeTriangle2DotX3, TreeTriangle2DotY3);
+ctx.closePath();
+ctx.lineWidth = LineWidth;
+ctx.stroke();
+ctx.fill();
+
+ctx.strokeStyle = "black";
+ctx.fillStyle = "green";
+ctx.beginPath();
+ctx.moveTo(TreeTriangle3DotX1, TreeTriangle3DotY1);
+ctx.lineTo(TreeTriangle3DotX2, TreeTriangle3DotY2);
+ctx.lineTo(TreeTriangle3DotX3, TreeTriangle3DotY3);
+ctx.closePath();
+ctx.lineWidth = LineWidth;
+ctx.stroke();
+ctx.fill();
+
+ctx.strokeStyle = "black";
+ctx.fillStyle = "brown";
+ctx.fillRect(TrunkX, TrunkY, TrunkWidth, TrunkLength);
+
+function gameloop()
+{
+
+drawthings();
+updatethings();
+clearthings();
+setTimeout(gameloop, 1000 / 50);
+}
+
+gameloop();
+</script>
+
+</br>
+<footer>
+</footer>
+</body>
+</html>

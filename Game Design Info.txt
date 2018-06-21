@@ -1,0 +1,3 @@
+Animal - Land Iguana
+Canvas Size - 28 x 20 Tiles
+Tile SIze - 32 x 32 Pixels
