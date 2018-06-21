@@ -1,0 +1,2444 @@
+<!DOCTYPE html>
+<title> Claude's Workshop Website </title>
+<link rel="stylesheet" href="style1.css" text="text/css">
+<html>
+<head>
+</head>
+<body>
+<div class="page">
+<header>
+<h1 class ="Lime" style="text-align:center"><strong> Home Page </strong></h1>
+</header>
+<nav>
+<div class="button"><a class="Links" href="CU4005 Game Design/design.html">Game Design</a></div>
+<div class="button"><a class="Links" href="CU4006 Game Portofolio 1/programming.html">Game Portofolio</a></div>
+<div class="button"><a class="Links" href="CU4007 Computer Gaming Hardware Architecture/architecture.html">Hardware Architecture</a></div>
+<div class="button"><a class="Links" href="about.html">About</a></div>
+<div class="button"><a class="Links" href="contact.html">Contact</a></div>
+</nav>
+</br>
+<p class="text"><strong></strong><p>
+<p class="text2"><strong>Click <a class="Links" href="snowman.html">here</a> to view a picture of a snowman drawn with javascript vectors.</strong></p>
+<p class="text2"><strong>Click <a class="Links" href="snake.html">here</a> to view an unfinished game of snake made with javascript.</strong></p>
+</div>
+<canvas id="verygood" width="1887" height="640"></canvas>
+<script>
+
+
+var canvas = document.getElementById("verygood");
+ctx = canvas.getContext("2d");
+
+//Cactus image source: http://www.pngall.com/cactus
+//Shadow Eagle image source: http://www.dreamviews.com/tasks-month-year/153846-task-month-september-2014-a-10.html
+  //window.onload = init();
+  var Lpress = false;
+  var Rpress = false;
+  var Upress = false;
+  var Dpress = false;
+  
+var keyDown = {};
+
+window.addEventListener('keydown', function(event)
+	{
+	keyDown[event.keyCode] = true;}, false);
+
+window.addEventListener
+('keyup', function(event)
+	{
+	delete keyDown[event.keyCode];
+	Lpress = false;
+    Rpress = false;
+    Upress = false;
+    Dpress = false;
+	Spacepress = false;
+	}, false);
+
+function clearthings()
+{
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+var tilesize = 32;
+var arrayX = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27];
+var arrayY = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+var GameWidth = tilesize*arrayX.length + 1;
+var GameLength = tilesize*arrayY.length + 1;
+var time = 50;
+var door0Hit = false;
+var doorHit = false;
+var door2Hit = false;
+var door3Hit = false;
+var x4 = 11, y4 = 10;
+var x9 = 11, y9 = 10;
+var x10 = 18, y10 = 17;
+var x11 = 2, y11 = 16;
+var x12 = 16, y12 = 15;
+var x13 = 8, y13 = 14;
+var x14 = 12, y14 = 13;
+var x15 = 4, y15 = 12;
+var x16 = 10, y16 = 11;
+var x17 = 6, y17 = 10;
+var x18 = 14, y18 = 9;
+var x19 = 7, y19 = 8;
+var x20 = 13, y20 = 7;
+var x21 = 17, y21 = 6;
+var x22 = 5, y22 = 5;
+var x23 = 15, y23 = 5;
+var x24 = 3, y24 = 4;
+var x = 0, y = 0;
+var GameState = 0;
+var eating = 0;
+var texttimer0 = 0;
+var texttimer1 = 0;
+var texttimer2 = 0;
+var texttimer3 = 0;
+var texttimer4 = 0;
+var texttimer5 = 0;
+var textkeeper = 0;
+
+var timer = 0;
+var timer2 = 0;
+var timer3 = 0;
+var eggtimer = 0;
+var lefttimer = 0;
+var lefttimestart = 0;
+var righttimestart = 0;
+var righttimer = 0;
+var uptimer = 0;
+var downtimer = 0;
+var movingleft;
+var movingright = 1;
+var movingup;
+var movingdown;
+var egghatch = 0;
+
+var eggupcrack1 = 0;
+var eggleftcrack1 = 0;
+var eggdowncrack1 = 0;
+var eggcracked1 = 0;
+var eggupcrack2 = 0;
+var eggleftcrack2 = 0;
+var eggdowncrack2 = 0;
+var eggcracked2 = 0;
+var eggupcrack3 = 0;
+var eggleftcrack3 = 0;
+var eggdowncrack3 = 0;
+var eggcracked3 = 0;
+var eggupcracked = 0;
+var eggleftcracked = 0;
+var eggdowncracked = 0;
+var eggcracked = 0;
+var birdswitch = 0;
+var birdswitch2 = 0;
+var birdswitch3 = 0;
+var birdswitch4 = 0;
+var birdswitch5 = 0;
+var birdswitch6 = 0;
+var birdswitch7 = 0;
+var birdswitch8 = 0;
+var birdswitch9 = 0;
+var birdswitch10 = 0;
+var birdswitch11 = 0;
+var birdswitch12 = 0;
+var birdswitch13 = 0;
+var birdswitch14 = 0;
+var birdswitch15 = 0;
+var movement = 1;
+
+var allcactus1, allcactus2, allcactus3;
+var cactusmap1 = [0,0,0,0];
+var cactusmap2 = [0,0,0];
+var cactusmap3 = [0,0];
+
+var BoatImage = new Image ();
+BoatImage.src = "images/newboat.png";
+
+var WaterImage = new Image ();
+WaterImage.src = "images/Water2.png";
+
+var SandImage = new Image ();
+SandImage.src = "images/SandBackground.png";
+
+var GrassImage = new Image ();
+GrassImage.src = "images/rszgrasssquare3.png";
+
+var WallImage = new Image ();
+WallImage.src = "images/rszwallstone.jpg";
+
+var DoorImage = new Image ();
+DoorImage.src = "images/rszdoor.png";
+
+var PlayerImage = new Image ();
+PlayerImage.src = "images/steveface.png";
+
+var CactusImage = new Image ();
+CactusImage.src = "images/rszcactus.png";
+
+var RockImage = new Image ();
+RockImage.src = "images/boulder1.png";
+
+var BoulderImage = new Image ();
+BoulderImage.src = "images/boulder2.png";
+
+var CentipedeImage = new Image ();
+CentipedeImage.src = "images/rszcentipede.png"
+
+var IguanaLeft1Image = new Image ();
+IguanaLeft1Image.src = "images/IguanaLeft1.png"
+
+var IguanaLeft2Image = new Image ();
+IguanaLeft2Image.src = "images/IguanaLeft2.png"
+
+var IguanaLeft3Image = new Image ();
+IguanaLeft3Image.src = "images/IguanaLeft3.png"
+
+var IguanaRight1Image = new Image ();
+IguanaRight1Image.src = "images/IguanaRight1.png"
+
+var IguanaRight2Image = new Image ();
+IguanaRight2Image.src = "images/IguanaRight2.png"
+
+var IguanaRight3Image = new Image ();
+IguanaRight3Image.src = "images/IguanaRight3.png"
+
+var IguanaUp1Image = new Image ();
+IguanaUp1Image.src = "images/IguanaUp1.png"
+
+var IguanaUp2Image = new Image ();
+IguanaUp2Image.src = "images/IguanaUp2.png"
+
+var IguanaUp3Image = new Image ();
+IguanaUp3Image.src = "images/IguanaUp3.png"
+
+var IguanaDown1Image = new Image ();
+IguanaDown1Image.src = "images/IguanaDown1.png"
+
+var IguanaDown2Image = new Image ();
+IguanaDown2Image.src = "images/IguanaDown2.png"
+
+var IguanaDown3Image = new Image ();
+IguanaDown3Image.src = "images/IguanaDown3.png"
+
+var EggImage = new Image () ;
+EggImage.src = "images/egg.png"
+
+var EggCrack1Image = new Image () ;
+EggCrack1Image.src = "images/eggcrack1.png"
+
+var EggCrack2Image = new Image () ;
+EggCrack2Image.src = "images/eggcrack2.png"
+
+var EggCrack3Image = new Image () ;
+EggCrack3Image.src = "images/eggcrack3.png"
+
+var BirdImage = new Image ();
+BirdImage.src = "images/bird.png"
+
+var Bird2Image = new Image ();
+Bird2Image.src = "images/bird2.png"
+
+var gridArray0 = [
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[4,2,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,4,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,4,4,5,4,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,4,5,3,3,6,4,0,0,0,0,4,4,0,0,0,0,0,0],
+[4,0,0,0,0,0,0,0,4,5,3,5,0,0,0,0,4,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,4,3,3,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,4,0,0,0,0,0,0,4,5,3,3,0,0,4,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,4,4,3,6,4,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+];
+
+var gridArray = [
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[4,2,4,0,0,0,0,0,0,0,0,0,4,0,0,0,4,0,3,4,0,0,0,0,0,0,4],
+[4,0,4,0,4,4,4,0,4,4,4,4,4,0,4,0,4,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,0,0,0,4,0,0,0,0,0,4,0,4,4,4,4,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,4,0,4,4,4,4,4,0,0,0,0,0,4,0,0,4,0,0,0,0,0,0,4],
+[4,4,4,4,4,0,4,0,0,0,4,4,4,4,4,0,4,0,4,4,0,0,0,0,0,0,4],
+[4,0,0,0,4,0,0,0,4,0,0,3,4,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,0,4,4,4,0,4,4,4,4,4,0,4,4,4,4,4,4,0,0,0,0,0,0,4],
+[4,0,4,0,0,0,4,0,4,0,0,0,4,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,4,4,0,4,4,4,0,4,2,4,0,4,4,0,4,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,4,0,0,3,4,0,4,4,4,0,0,4,0,4,0,4,0,0,0,0,0,0,4],
+[4,4,4,0,4,4,4,4,4,0,4,0,4,4,4,4,0,4,4,4,0,0,0,0,0,0,4],
+[4,0,0,0,4,0,0,0,0,0,4,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,4,4,0,4,4,4,0,4,0,4,0,0,0,4,4,0,4,0,0,0,0,0,0,4],
+[4,0,4,0,0,0,4,0,0,0,4,0,4,4,4,4,4,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,0,4,4,4,4,4,4,4,0,0,0,0,0,4,0,4,4,0,0,0,0,0,0,4],
+[4,0,4,0,0,0,4,0,0,0,4,4,4,4,4,3,4,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,4,4,0,4,0,4,0,4,0,0,0,4,4,4,4,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+];
+
+
+
+var gridArray2 = [
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,7,7,7,7,7,7,7],
+[1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7], 
+[1,3,3,3,3,3,3,0,0,0,0,5,3,3,3,3,3,3,0,7,0,0,0,0,0,0,7],
+[1,3,3,3,3,3,0,0,0,0,0,0,0,3,3,3,3,0,6,7,0,0,0,0,0,0,7],
+[1,3,3,3,3,3,0,6,0,0,0,0,0,0,3,3,3,0,0,2,7,0,0,0,0,0,0],
+[1,3,3,3,3,3,0,0,0,0,0,2,0,0,3,3,3,7,0,7,0,0,0,0,0,0,7],
+[1,3,3,3,3,3,3,0,0,7,0,0,0,0,3,3,3,3,0,7,0,0,0,0,0,0,7],
+[7,3,3,3,3,3,3,3,0,0,0,7,0,0,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,0,3,3,3,3,3,3,3,0,0,0,0,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,7,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,0,0,7,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,6,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,0,7],
+[7,7,7,7,7,7,7,1,1,1,1,1,1,1,1,1,1,1,1,1,7,7,7,7,7,7,7],
+];
+
+var gridArray3 = [
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,4,0,0,0,0,0,4,0,0,0,4,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0],
+[4,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,3,0,0,0,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,4,0,0,0,0,0,0,4],
+[4,4,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+];
+
+var gridArray4 = [
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+[4,0,4,0,0,0,0,0,0,4,4,4,4,4,0,0,4,0,0,4,0,0,0,0,4,4,4],
+[4,0,4,0,0,0,0,0,4,4,0,3,4,4,4,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,4,4,0,0,4,4,4,0,0,0,0,4,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,4,0,0,0,0,0,0,4],
+[4,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,4,4,0,0,0,0,0,0],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4],
+[4,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,4,0,4,0,0,0,0,0,0,4],
+[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+];
+
+function wall (x3, y3)
+{
+ctx.drawImage(BoulderImage, x3*tilesize, y3*tilesize);
+}
+
+function door (x1, y1)
+{
+ctx.drawImage(DoorImage, x1*tilesize, y1*tilesize);
+}
+
+function water (x5, y5)
+{
+ctx.drawImage(WaterImage, x5*tilesize, y5*tilesize);
+}
+
+function sand (x6, y6)
+{
+ctx.drawImage(SandImage, x6*tilesize, y6*tilesize);
+}
+
+function player (x4, y4)
+{
+ctx.drawImage(PlayerImage, x4*tilesize, y4*tilesize);
+}
+
+function IguanaLeft1 (x4, y4)
+{
+ctx.drawImage(IguanaLeft1Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaLeft2 (x4, y4)
+{
+ctx.drawImage(IguanaLeft2Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaLeft3 (x4, y4)
+{
+ctx.drawImage(IguanaLeft3Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaRight1 (x4, y4)
+{
+ctx.drawImage(IguanaRight1Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaRight2 (x4, y4)
+{
+ctx.drawImage(IguanaRight2Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaRight3 (x4, y4)
+{
+ctx.drawImage(IguanaRight3Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaDown1 (x4, y4)
+{
+ctx.drawImage(IguanaDown1Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaDown2 (x4, y4)
+{
+ctx.drawImage(IguanaDown2Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaDown3 (x4, y4)
+{
+ctx.drawImage(IguanaDown3Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaUp1 (x4, y4)
+{
+ctx.drawImage(IguanaUp1Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaUp2 (x4, y4)
+{
+ctx.drawImage(IguanaUp2Image, x4*tilesize, y4*tilesize);
+}
+
+function IguanaUp3 (x4, y4)
+{
+ctx.drawImage(IguanaUp3Image, x4*tilesize, y4*tilesize);
+}
+
+function egg (x4, y4)
+{
+ctx.drawImage(EggImage, x4*tilesize, y4*tilesize);
+}
+
+function eggcrack1 (x4, y4)
+{
+ctx.drawImage(EggCrack1Image, x4*tilesize, y4*tilesize);
+}
+
+function eggcrack2 (x4, y4)
+{
+ctx.drawImage(EggCrack2Image, x4*tilesize, y4*tilesize);
+}
+
+function eggcrack3 (x4, y4)
+{
+ctx.drawImage(EggCrack3Image, x4*tilesize, y4*tilesize);
+}
+
+function cactus (x7, y7)
+{
+ctx.drawImage(CactusImage, x7*tilesize, y7*tilesize);
+}
+
+function boat (x4, y4)
+{
+ctx.drawImage(BoatImage, x4*tilesize, y4*tilesize);
+}
+
+function rock (x8, y8)
+{
+ctx.drawImage(RockImage, x8*tilesize, y8*tilesize);
+}
+
+function centipede (x9, y9)
+{
+ctx.drawImage(CentipedeImage, x9*tilesize, y9*tilesize);
+}
+
+function bird (x10, y10)
+{
+ctx.drawImage(BirdImage, x10*tilesize, y10*tilesize)
+}
+
+function bird2 (x10, y10)
+{
+ctx.drawImage(Bird2Image, x10*tilesize, y10*tilesize)
+}
+
+function drawGrid0()
+{
+	for (y = 0; y < gridArray0.length; y++)
+	{
+		for (x = 0; x < gridArray0.length; x++)
+		{
+			if (gridArray0[y][x] == 1)
+			{
+				wall(x, y);
+			}
+			else if (gridArray0[y][x] == 2)
+			{
+				door(x, y);
+			}
+			else if (gridArray0[y][x] == 3)
+			{
+				egg(x, y);
+			}
+			else if (gridArray0[y][x] == 4)
+			{
+				rock(x, y);
+			}
+			else if (gridArray0[y][x] == 5)
+			{
+				eggcrack1(x, y);
+			}
+			else if (gridArray0[y][x] == 6)
+			{
+				eggcrack2(x, y);
+			}
+			else if (gridArray0[y][x] == 7)
+			{
+				eggcrack3(x, y);
+			}
+			else if (gridArray0[y][x] == 8)
+			{
+				IguanaLeft1(x, y);
+			}
+			else if (gridArray0[y][x] == 9)
+			{
+				IguanaLeft2(x, y);
+			}
+			else if (gridArray0[y][x] == 10)
+			{
+				IguanaLeft3(x, y);
+			}
+			else if (gridArray0[y][x] == 11)
+			{
+				IguanaRight1(x, y);
+			}
+			else if (gridArray0[y][x] == 12)
+			{
+				IguanaRight2(x, y);
+			}
+			else if (gridArray0[y][x] == 13)
+			{
+				IguanaRight3(x, y);
+			}
+		}
+	}
+}
+
+function drawGrid()
+{
+	for (y = 0; y < gridArray.length; y++)
+	{
+		for (x = 0; x < gridArray.length; x++)
+		{
+			if (gridArray[y][x] == 1)
+			{
+				wall(x, y);
+			}
+			else if (gridArray[y][x] == 2)
+			{
+				door(x, y);
+			}
+			else if (gridArray[y][x] == 3)
+			{
+				cactus(x, y);
+			}
+			else if (gridArray[y][x] == 4)
+			{
+				rock(x, y);
+			}
+		}
+	}
+}
+
+function drawGrid2()
+{
+	for (y = 0; y < gridArray2.length; y++)
+	{
+		for (x = 0; x < gridArray2.length; x++)
+		{
+			if (gridArray2[y][x] == 1)
+			{
+				wall(x, y);
+			}
+			else if (gridArray2[y][x] == 2)
+			{
+				door(x, y);
+			}
+			else if (gridArray2[y][x] == 3)
+			{
+				water(x, y);
+			}
+			else if (gridArray2[y][x] == 5)
+			{
+				boat(x, y);
+			}
+			else if (gridArray2[y][x] == 6)
+			{
+				cactus(x, y);
+			}
+			else if (gridArray2[y][x] == 7)
+			{
+				rock(x, y);
+			}
+		}
+	}
+}
+
+function drawGrid3()
+{
+	for (y = 0; y < gridArray3.length; y++)
+	{
+		for (x = 0; x < gridArray3.length; x++)
+		{
+			if (gridArray3[y][x] == 1)
+			{
+				wall(x, y);
+			}
+			else if (gridArray3[y][x] == 2)
+			{
+				door(x, y);
+			}
+			else if (gridArray3[y][x] == 3)
+			{
+				cactus(x, y);
+			}
+			else if (gridArray3[y][x] == 4)
+			{
+				rock(x, y);
+			}
+		}
+	}
+}
+
+function drawGrid4()
+{
+	for (y = 0; y < gridArray4.length; y++)
+	{
+		for (x = 0; x < gridArray4.length; x++)
+		{
+			if (gridArray4[y][x] == 1)
+			{
+				wall(x, y);
+			}
+			else if (gridArray4[y][x] == 2)
+			{
+				door(x, y);
+			}
+			else if (gridArray4[y][x] == 3)
+			{
+				IguanaLeft1(x, y);
+			}
+			else if (gridArray4[y][x] == 4)
+			{
+				rock(x, y);
+			}
+			else if (gridArray4[y][x] == 5)
+			{
+				bird(x, y);
+			}
+			else if (gridArray4[y][x] == 6)
+			{
+				bird2(x, y);
+			}
+		}
+	}
+}
+
+function CheckHit()
+{
+if (x4 == 1 && y4 == 1 && GameState == 0)
+{
+door0Hit = true;
+}
+else
+{ 
+door0Hit = false;
+}
+
+if (x4 == 11 && y4 == 9 && GameState == 1)
+{
+doorHit = true;
+}
+else
+{
+doorHit = false;
+}
+
+if (x4 == 19 && y4 == 8 && GameState == 2)
+{
+door2Hit = true;
+}
+else
+{
+door2Hit = false;
+}
+
+if (x4 == 9 && y4 == 18 && GameState == 3)
+{
+door3Hit = true;
+}
+else
+{
+door3Hit = false;
+}
+}
+
+function drawCentipede()
+{
+centipede(x9,y9);
+}
+
+function drawBird()
+{
+bird(x10, y10);
+}
+
+function drawBird2()
+{
+bird2(x10, y10);
+}
+
+function draw2Bird()
+{
+bird(x11, y11);
+}
+
+function draw2Bird2()
+{
+bird2(x11, y11);
+}
+
+function draw3Bird()
+{
+bird(x12, y12);
+}
+
+function draw3Bird2()
+{
+bird2(x12, y12);
+}
+
+function draw4Bird()
+{
+bird(x13, y13);
+}
+
+function draw4Bird2()
+{
+bird2(x13, y13);
+}
+
+function draw5Bird()
+{
+bird(x14, y14);
+}
+
+function draw5Bird2()
+{
+bird2(x14, y14);
+}
+
+function draw6Bird()
+{
+bird(x15, y15);
+}
+
+function draw6Bird2()
+{
+bird2(x15, y15);
+}
+
+function draw7Bird()
+{
+bird(x16, y16);
+}
+
+function draw7Bird2()
+{
+bird2(x16, y16);
+}
+
+function draw8Bird()
+{
+bird(x17, y17);
+}
+
+function draw8Bird2()
+{
+bird2(x17, y17);
+}
+
+function draw9Bird()
+{
+bird(x18, y18);
+}
+
+function draw9Bird2()
+{
+bird2(x18, y18);
+}
+
+function draw10Bird()
+{
+bird(x19, y19);
+}
+
+function draw10Bird2()
+{
+bird2(x19, y19);
+}
+
+function draw11Bird()
+{
+bird(x20, y20);
+}
+
+function draw11Bird2()
+{
+bird2(x20, y20);
+}
+
+function draw12Bird()
+{
+bird(x21, y21);
+}
+
+function draw12Bird2()
+{
+bird2(x21, y21);
+}
+
+function draw13Bird()
+{
+bird(x22, y22);
+}
+
+function draw13Bird2()
+{
+bird2(x22, y22);
+}
+
+function draw14Bird()
+{
+bird(x23, y23);
+}
+
+function draw14Bird2()
+{
+bird2(x23, y23);
+}
+
+function draw15Bird()
+{
+bird(x24, y24);
+}
+
+function draw15Bird2()
+{
+bird2(x24, y24);
+}
+
+function drawPlayer()
+{
+ player(x4,y4);
+}
+
+function drawBoat()
+{
+boat(x4,y4);
+}
+
+function drawEgg()
+{
+egg(x4, y4);
+}
+
+function drawEggCrack1()
+{
+eggcrack1(x4, y4);
+}
+
+function drawEggCrack2()
+{
+eggcrack2(x4, y4);
+}
+
+function drawEggCrack3()
+{
+eggcrack3(x4, y4);
+}
+
+function drawIguanaL1()
+{
+IguanaLeft1(x4, y4);
+}
+
+function drawIguanaL2()
+{
+IguanaLeft2(x4, y4);
+}
+
+function drawIguanaL3()
+{
+IguanaLeft3(x4, y4);
+}
+
+function drawIguanaR1()
+{
+IguanaRight1(x4, y4);
+}
+
+function drawIguanaR2()
+{
+IguanaRight2(x4, y4);
+}
+
+function drawIguanaR3()
+{
+IguanaRight3(x4, y4);
+}
+
+function drawIguanaD1()
+{
+IguanaDown1(x4, y4);
+}
+
+function drawIguanaD2()
+{
+IguanaDown2(x4, y4);
+}
+
+function drawIguanaD3()
+{
+IguanaDown3(x4, y4);
+}
+
+function drawIguanaU1()
+{
+IguanaUp1(x4, y4);
+}
+
+function drawIguanaU2()
+{
+IguanaUp2(x4, y4);
+}
+
+function drawIguanaU3()
+{
+IguanaUp3(x4, y4);
+}
+
+function drawthings()
+{
+if (lefttimestart == 1)
+{
+lefttimer = lefttimer + 1;
+}
+if (righttimestart == 1)
+{
+righttimer = righttimer + 1;
+}
+//uptimer = uptimer + 1;
+//downtimer = downtimer + 1;
+ctx.drawImage(SandImage, 0, 0);
+
+if (GameState == 0)
+{
+drawGrid0();
+texttimer0 = texttimer0 + 1;
+if (textkeeper == 1)
+{
+ctx.fillText("Pink iguanas begin their life by hatching from an", 40, 60);
+ctx.fillText("egg.", 40, 90);
+}
+if (textkeeper == 2)
+{
+ctx.fillText("Use the arrow keys to break out of your egg and", 40, 60);
+ctx.fillText("to move around, then head towards the exit.", 40, 90);
+}
+if (eggcracked == 0)
+{
+drawEgg();
+}
+if (gridArray0[y4][x4] == 3)
+{
+drawEgg();
+}
+if (gridArray0[y4][x4] == 5)
+{
+drawEggCrack1();
+}
+if (gridArray0[y4][x4] == 6 )
+{
+drawEggCrack2();
+}
+if (gridArray0[y4][x4] == 7)
+{
+drawEggCrack3();
+}
+
+}
+if (GameState == 1)
+{
+drawGrid();
+texttimer1 = texttimer1 + 1;
+if (textkeeper == 4)
+{
+ctx.fillText("Pink iguanas have evolved to be able to find their", 40, 60);
+ctx.fillText("main source of food in the most complex of mazes.", 40, 90);
+ctx.fillText("Simply... amazing.", 40, 120);
+}
+}
+if (GameState == 2)
+{
+drawGrid2();
+texttimer2 = texttimer2 + 1;
+if (textkeeper == 6)
+{
+ctx.fillText("Pink iguanas have sometimes had to resort to other", 40, 60);
+ctx.fillText("means of reaching their main source of food, such", 40, 90);
+ctx.fillText("as: Hijacking a boat.", 40, 120);
+}
+/* if (movingdown == 1 && downtimer < 11)
+{
+drawIguanaD1();
+}
+if (movingdown == 1 && downtimer < 21 && downtimer > 10)
+{
+drawIguanaD2();
+}
+if (movingdown == 1 && downtimer < 31 && downtimer > 20)
+{
+drawIguanaD3(); */
+}
+
+/* if (movingup == 1 && uptimer < 11)
+{
+drawIguanaU1();
+}
+if (movingup == 1 && uptimer < 21 && uptimer > 10)
+{
+drawIguanaU2();
+}
+if (movingup == 1 && uptimer < 31 && uptimer > 20)
+{
+drawIguanaU3();
+} */
+
+if (movingleft == 1 && lefttimer < 11 && eggcracked == 1)
+{
+drawIguanaL1();
+}
+if (movingleft == 1 && lefttimer < 21 && lefttimer > 10 && eggcracked == 1)
+{
+drawIguanaL2();
+}
+if (movingleft == 1 && lefttimer < 31 && lefttimer > 20 && eggcracked == 1)
+{
+drawIguanaL3();
+}
+
+if (movingright == 1 && righttimer < 11 && eggcracked == 1)
+{
+drawIguanaR1();
+}
+if (movingright == 1 && righttimer < 21 && righttimer > 10 && eggcracked == 1)
+{
+drawIguanaR2();
+}
+if (movingright == 1 && righttimer < 31 && righttimer > 20 && eggcracked == 1)
+{
+drawIguanaR3();
+}
+
+if (GameState == 3)
+{
+drawGrid3();
+texttimer3 = texttimer3 + 1;
+if (textkeeper == 8)
+{
+ctx.fillText("When their main source of food is scarce, pink", 40, 60);
+ctx.fillText("iguanas have evolved to be able to consume other", 40, 90);
+ctx.fillText("types of food, such as this centipede right here.", 40, 120);
+}
+//}
+
+if (gridArray[y4][x4] != 5 || GameState != 2)
+{
+/* if (movingdown == 1 && downtimer < 11)
+{
+drawIguanaD1();
+}
+if (movingdown == 1 && downtimer < 21 && downtimer > 10)
+{
+drawIguanaD2();
+}
+if (movingdown == 1 && downtimer < 31 && downtimer > 20)
+{
+drawIguanaD3();
+}
+
+if (movingup == 1 && uptimer < 11)
+{
+drawIguanaU1();
+}
+if (movingup == 1 && uptimer < 21 && uptimer > 10)
+{
+drawIguanaU2();
+}
+if (movingup == 1 && uptimer < 31 && uptimer > 20)
+{
+drawIguanaU3();
+} */
+
+if (movingleft == 1 && lefttimer < 11 && eggcracked == 1)
+{
+drawIguanaL1();
+}
+if (movingleft == 1 && lefttimer < 21 && lefttimer > 10 && eggcracked == 1)
+{
+drawIguanaL2();
+}
+if (movingleft == 1 && lefttimer < 31 && lefttimer > 20 && eggcracked == 1)
+{
+drawIguanaL3();
+}
+
+if (movingright == 1 && righttimer < 11 && eggcracked == 1)
+{
+drawIguanaR1();
+}
+if (movingright == 1 && righttimer < 21 && righttimer > 10 && eggcracked == 1)
+{
+drawIguanaR2();
+}
+if (movingright == 1 && righttimer < 31 && righttimer > 20 && eggcracked == 1)
+{
+drawIguanaR3();
+}
+}
+
+if (GameState == 3)
+{
+	if (eating != 1)
+	{
+drawCentipede();
+	}
+	//drawShadow();
+	}
+
+}
+
+if (GameState == 4)
+{
+drawGrid4();
+texttimer4 = texttimer4 + 1;
+if (textkeeper == 10)
+{
+ctx.fillText("Only the most evassive of iguanas will be able to", 40, 60);
+ctx.fillText("pass on their genes. To reach a mate, an iguana", 40, 90);
+ctx.fillText("will often have to avoid the eagles from the shadow", 40, 120);
+ctx.fillText("realm. Good luck and may the best iguana win.", 40, 150);
+}
+
+if (x4 == 10 && y4 == 2)
+{
+ctx.fillText("You did it! Congratulations. Now the iguana is", 40, 60)
+ctx.fillText("able to spread its genes to make way for the", 40, 90)
+ctx.fillText("next generation of pink iguanas. The end.", 40, 120)
+movement = 0;
+}
+if (birdswitch == 0)
+{
+drawBird2();
+}
+if (birdswitch == 1)
+{
+drawBird();
+}
+
+if (birdswitch2 == 0)
+{
+draw2Bird2();
+}
+if (birdswitch2 == 1)
+{
+draw2Bird();
+}
+
+if (birdswitch3 == 0)
+{
+draw3Bird2();
+}
+if (birdswitch3 == 1)
+{
+draw3Bird();
+}
+
+if (birdswitch4 == 0)
+{
+draw4Bird2();
+}
+if (birdswitch4 == 1)
+{
+draw4Bird();
+}
+
+if (birdswitch5 == 0)
+{
+draw5Bird2();
+}
+if (birdswitch5 == 1)
+{
+draw5Bird();
+}
+
+if (birdswitch6 == 0)
+{
+draw6Bird2();
+}
+if (birdswitch6 == 1)
+{
+draw6Bird();
+}
+
+if (birdswitch7 == 0)
+{
+draw7Bird2();
+}
+if (birdswitch7 == 1)
+{
+draw7Bird();
+}
+
+if (birdswitch8 == 0)
+{
+draw8Bird2();
+}
+if (birdswitch8 == 1)
+{
+draw8Bird();
+}
+
+if (birdswitch9 == 0)
+{
+draw9Bird2();
+}
+if (birdswitch9 == 1)
+{
+draw9Bird();
+}
+
+if (birdswitch10 == 0)
+{
+draw10Bird2();
+}
+if (birdswitch10 == 1)
+{
+draw10Bird();
+}
+
+if (birdswitch11 == 0)
+{
+draw11Bird2();
+}
+if (birdswitch11 == 1)
+{
+draw11Bird();
+}
+
+if (birdswitch12 == 0)
+{
+draw12Bird2();
+}
+if (birdswitch12 == 1)
+{
+draw12Bird();
+}
+
+if (birdswitch13 == 0)
+{
+draw13Bird2();
+}
+if (birdswitch13 == 1)
+{
+draw13Bird();
+}
+
+if (birdswitch14 == 0)
+{
+draw14Bird2();
+}
+if (birdswitch14 == 1)
+{
+draw14Bird();
+}
+
+if (birdswitch15 == 0)
+{
+draw15Bird2();
+}
+if (birdswitch15 == 1)
+{
+draw15Bird();
+}
+}
+
+if (lefttimer >= 30)
+{
+lefttimer = 0;
+}
+if (righttimer >= 30)
+{
+righttimer = 0;
+}
+if (uptimer >= 30)
+{
+uptimer = 0;
+}
+if (downtimer >= 30)
+{
+downtimer = 0;
+}
+
+if (gridArray2[y4][x4] == 5 && GameState == 2)
+{
+drawBoat();
+}
+
+ctx.fillStyle = "#93ffe9"; //#93ffe9
+ctx.font = "24px Comic Sans MS";
+if (door0Hit == true && GameState == 0)
+{
+GameState = 1;
+}
+
+if (doorHit == true && GameState == 1 && allcactus1 == 1)
+{
+ctx.fillText("You escaped, congratulations...", 125, 320);
+GameState = 2;
+}
+
+else if (door2Hit == true && GameState == 2 && allcactus2 == 1)
+{
+ctx.fillText("You escaped, congratulations...", 125, 320);
+GameState = 3;
+}
+
+else if (door3Hit == true && GameState == 3 && allcactus3 == 1 && eating == 1)
+{
+ctx.fillText("You escaped, congratulations...", 125, 320);
+GameState = 4;
+}
+}
+
+
+function updatethings()
+{
+	timer = timer + 1;
+	timer2 = timer2 + 1;
+	timer3 = timer3 + 1;
+	eggtimer = eggtimer + 1;
+    texttimer0 = texttimer0 + 1;
+
+	
+if (GameState == 0)
+{
+    if (texttimer0 > 40 && texttimer0 < 500)
+	{
+	textkeeper = 1;
+	}
+	  if (texttimer0 > 500 && texttimer0 < 1400)
+	{
+	textkeeper = 2;
+	}
+	 if (texttimer0 > 1400 && GameState == 0)
+	{
+	textkeeper = 3;
+	}
+	if (eggtimer == 85)
+	{
+		gridArray0[9][11] = 6;
+	}
+	if (eggtimer == 145)
+	{
+		gridArray0[9][11] = 7;
+	}
+	if (eggtimer == 225)
+	{
+		gridArray0[9][11] = 11;
+		egghatch = 1;
+	}
+	if (eggtimer == 245)
+	{
+		gridArray0[9][11] = 8;
+	}
+	if (eggtimer == 265)
+	{
+		gridArray0[9][11] = 11;
+	}
+	if (eggtimer == 270)
+	{
+		gridArray0[9][12] = 12;
+		gridArray0[9][11] = 0;
+	}
+	if (eggtimer == 275)
+	{
+		gridArray0[9][13] = 13;
+		 gridArray0[9][12] = 0;
+	}
+	if (eggtimer == 280)
+	{
+		gridArray0[9][14] = 11;
+		 gridArray0[9][13] = 0;
+	}
+	if (eggtimer == 285)
+	{
+		gridArray0[9][15] = 12;
+		 gridArray0[9][14] = 0;
+	}
+	if (eggtimer == 290)
+	{
+		gridArray0[8][15] = 13;
+		 gridArray0[9][15] = 0;
+	}
+	if (eggtimer == 295)
+	{
+		gridArray0[7][14] = 8;
+		gridArray0[8][15] = 0;
+	}
+	if (eggtimer == 300)
+	{
+		gridArray0[6][13] = 9;
+		gridArray0[7][14] = 0;
+	}
+	if (eggtimer == 305)
+	{
+		gridArray0[5][12] = 10;
+		gridArray0[6][13] = 0;
+	}
+	if (eggtimer == 310)
+	{
+		gridArray0[5][11] = 8;
+		gridArray0[5][12] = 0;
+	}
+	if (eggtimer == 315)
+	{
+		gridArray0[5][10] = 9;
+		gridArray0[5][11] = 0;
+	}
+	if (eggtimer == 320)
+	{
+		gridArray0[5][9] = 10;
+		gridArray0[5][10] = 0;
+	}
+	if (eggtimer == 325)
+	{
+		gridArray0[5][8] = 8;
+		gridArray0[5][9] = 0;
+	}
+	if (eggtimer == 330)
+	{
+		gridArray0[5][7] = 9;
+		gridArray0[5][8] = 0;
+	}
+	if (eggtimer == 335)
+	{
+		gridArray0[5][6] = 10;
+		gridArray0[5][7] = 0;
+	}
+	if (eggtimer == 340)
+	{
+		gridArray0[4][5] = 8;
+		gridArray0[5][6] = 0;
+	}
+	if (eggtimer == 345)
+	{
+		gridArray0[4][4] = 9;
+		gridArray0[4][5] = 0;
+	}
+	if (eggtimer == 350)
+	{
+		gridArray0[4][3] = 10;
+		gridArray0[4][4] = 0;
+	}
+	if (eggtimer == 355)
+	{
+		gridArray0[3][2] = 8;
+		gridArray0[4][3] = 0;
+	}
+	if (eggtimer == 360)
+	{
+		gridArray0[3][2] = 11;
+	}
+	if (eggtimer == 390)
+	{
+		gridArray0[3][2] = 8;
+	}
+	if (eggtimer == 395)
+	{
+		gridArray0[2][2] = 9;
+		gridArray0[3][2] = 0;
+	}
+	if (eggtimer == 400)
+	{
+		gridArray0[2][2] = 0;
+	}
+	if (38 in keyDown && eggcracked == 0 && eggupcrack1 == 0 && egghatch == 1)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 1;
+	movingdown = 0;
+	eggupcrack1 = 1;
+	gridArray0[y4][x4] = 3;
+	}
+	if (38 in keyDown && eggcracked == 0 && eggcracked1 == 1 && eggupcrack2 == 0)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 1;
+	movingdown = 0;
+	eggupcrack2 = 1;
+	gridArray0[y4][x4] = 5;
+	}
+	if (38 in keyDown && eggcracked == 0 && eggcracked2 == 1 && eggupcrack3 == 0)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 1;
+	movingdown = 0;
+	eggupcrack3 = 1;
+	gridArray0[y4][x4] = 6;
+	}
+	if (38 in keyDown && eggcracked == 0 && eggcracked3 == 1 && eggupcracked == 0)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 1;
+	movingdown = 0;
+	eggupcracked = 1;
+	gridArray0[y4][x4] = 7;
+	}
+	if (40 in keyDown && eggcracked == 0 && eggleftcrack1 == 1 && eggdowncrack1 == 0)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 1;
+	eggdowncrack1 = 1;
+	gridArray0[y4][x4] = 3;
+	}
+	if (40 in keyDown && eggcracked == 0 && eggleftcrack2 == 1 && eggdowncrack2 == 0)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 1;
+	eggdowncrack2 = 1;
+	gridArray0[y4][x4] = 5;
+	}
+	if (40 in keyDown && eggcracked == 0 && eggleftcrack3 == 1 && eggdowncrack3 == 0)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 1;
+	eggdowncrack3 = 1;
+	gridArray0[y4][x4] = 6;
+	}
+	if (40 in keyDown && eggcracked == 0 && eggleftcracked == 1 && eggdowncracked == 0)
+	{
+	movingleft = 0;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 1;
+	eggdowncracked = 1;
+	gridArray0[y4][x4] = 7;
+	}
+	if (37 in keyDown && eggcracked == 0 && eggupcrack1 == 1 && eggleftcrack1 == 0)
+	{
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+	eggleftcrack1 = 1;
+	gridArray0[y4][x4] = 3;
+	}
+	if (37 in keyDown && eggcracked == 0 && eggupcrack2 == 1 && eggleftcrack2 == 0)
+	{
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+	eggleftcrack2 = 1;
+	gridArray0[y4][x4] = 5;
+	}
+	if (37 in keyDown && eggcracked == 0 && eggupcrack3 == 1 && eggleftcrack3 == 0)
+	{
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+	eggleftcrack3 = 1;
+	gridArray0[y4][x4] = 6;
+	}
+	if (37 in keyDown && eggcracked == 0 && eggupcracked == 1 && eggleftcracked == 0)
+	{
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+	eggleftcracked = 1;
+	gridArray0[y4][x4] = 7;
+	}
+	if (39 in keyDown && eggcracked == 0 && eggdowncrack1 == 1 && eggcracked1 == 0)
+	{
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+	eggcracked1 = 1;
+	gridArray0[y4][x4] = 5;
+	}
+	if (39 in keyDown && eggcracked == 0 && eggdowncrack2 == 1 && eggcracked2 == 0)
+	{
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+	eggcracked2 = 1;
+	gridArray0[y4][x4] = 6;
+	}
+	if (39 in keyDown && eggcracked == 0 && eggdowncrack3 == 1 && eggcracked3 == 0)
+	{
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+	eggcracked3 = 1;
+	gridArray0[y4][x4] = 7;
+	}
+	if (39 in keyDown && eggcracked == 0 && eggdowncracked == 1 && eggcracked == 0)
+	{
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+	eggcracked = 1;
+	gridArray0[y4][x4] = 0;
+	}
+	if (timer > 5)
+	{
+   if (38 in keyDown && gridArray0[y4-1][x4] != 1 && gridArray0[y4-1][x4] != 4 && gridArray0[y4-1][x4] != 3 && gridArray0[y4-1][x4] != 6 && eggcracked == 1)
+	{
+	y4 = y4 - 1;
+	/* movingleft = 0;
+	movingright = 0;
+	movingup = 1;
+	movingdown = 0; */
+	}
+	if (40 in keyDown && gridArray0[y4+1][x4] != 1 && gridArray0[y4+1][x4] != 4 && gridArray0[y4+1][x4] != 3 && gridArray0[y4+1][x4] != 6 && eggcracked == 1)
+	{
+	y4 = y4 + 1;
+	/* movingleft = 0;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 1; */
+	}
+	if (37 in keyDown && gridArray0[y4][x4-1] != 1 && gridArray0[y4][x4-1] != 4 && gridArray0[y4][x4-1] != 3 && gridArray0[y4][x4-1] != 6 && eggcracked == 1)
+	{
+	x4 = x4 - 1;
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+	}
+	else 
+	{
+	lefttimestart = 0;
+	}
+	if (39 in keyDown && gridArray0[y4][x4+1] != 1 && gridArray0[y4][x4+1] != 4 && gridArray0[y4][x4+1] != 3 && gridArray0[y4][x4+1] != 6 && eggcracked == 1)
+	{
+	x4 = x4 + 1;
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+	}
+	else
+	{
+	righttimestart = 0;
+	}
+	timer = 0;
+	}
+}
+	
+if (GameState == 1)
+{
+texttimer1 = texttimer1 + 1;
+if (texttimer1 > 50 && texttimer1 < 1400)
+{
+textkeeper = 4;
+}
+if (texttimer1 > 1400 && GameState == 1)
+{
+textkeeper = 5;
+}
+		if (timer > 5)
+	{
+	if (38 in keyDown && gridArray[y4-1][x4] != 1 && gridArray[y4-1][x4] != 4 && gridArray[y4-1][x4] != 3)
+	{
+	y4 = y4 - 1;
+	}
+	if (40 in keyDown && gridArray[y4+1][x4] != 1 && gridArray[y4+1][x4] != 4 && gridArray[y4+1][x4] != 3)
+	{
+	y4 = y4 + 1;
+	}
+	if (37 in keyDown && gridArray[y4][x4-1] != 1 && gridArray[y4][x4-1] != 4 && gridArray[y4][x4-1] != 3)
+	{
+	x4 = x4 - 1;
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+	}
+	else 
+	{
+	lefttimestart = 0;
+	}
+	if (39 in keyDown && gridArray[y4][x4+1] != 1 && gridArray[y4][x4+1] != 4 && gridArray[y4][x4+1] != 3)
+	{
+	x4 = x4 + 1;
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+	}
+	else
+	{
+	righttimestart = 0;
+	}
+	
+	if (gridArray[y4+1][x4] == 3)
+	{
+		gridArray[y4+1][x4] = 0;
+	}	
+	if (gridArray[y4-1][x4] == 3)
+	{
+		gridArray[y4-1][x4] = 0;
+	}	
+	if (gridArray[y4][x4+1] == 3)
+	{
+		gridArray[y4][x4+1] = 0;
+	}	
+	if (gridArray[y4][x4-1] == 3)
+	{
+		gridArray[y4][x4-1] = 0;
+	}	
+	timer = 0;
+	}
+}
+
+if (gridArray[1][18] == 0)
+{
+	cactusmap1[0] = 1;
+}
+if (gridArray[6][11] == 0)
+{
+	cactusmap1[1] = 1;
+}
+if (gridArray[10][7] == 0)
+{
+	cactusmap1[2] = 1;
+}
+if (gridArray[16][15] == 0)
+{
+	cactusmap1[3] = 1;
+}
+
+if (cactusmap1[0] == 1 && cactusmap1[1] == 1 && cactusmap1[2] == 1 && cactusmap1[3] == 1)
+{
+	allcactus1 = 1;
+}
+
+if (GameState == 2)
+{
+texttimer2 = texttimer2 + 1;
+if (texttimer2 > 50 && texttimer2 < 1400)
+{
+textkeeper = 6;
+}
+if (texttimer2 > 1400 && GameState == 2)
+{
+textkeeper = 7;
+}
+	if (timer > 5)
+{
+if (38 in keyDown && gridArray2[y4-1][x4] != 1 && gridArray2[y4-1][x4] != 3 && gridArray2[y4-1][x4] != 6 && gridArray2[y4-1][x4] != 7)
+{
+	y4 = y4 - 1;
+}
+ if (38 in keyDown && gridArray2[y4][x4] == 5 && gridArray2[y4-1][x4] == 3)
+{
+	y4 = y4 - 1;
+	gridArray2[y4][x4] = 5;
+	gridArray2[y4+1][x4] = 3;
+}
+if (40 in keyDown && gridArray2[y4+1][x4] != 1 && gridArray2[y4+1][x4] != 3 && gridArray2[y4+1][x4] != 6 && gridArray2[y4+1][x4] != 7)
+{
+	y4 = y4 + 1;
+}
+ if (40 in keyDown && gridArray2[y4][x4] == 5 && gridArray2[y4+1][x4] == 3)
+{
+	y4 = y4 + 1;
+	gridArray2[y4][x4] = 5;
+	gridArray2[y4-1][x4] = 3;
+}
+if (37 in keyDown && gridArray2[y4][x4-1] != 1 && gridArray2[y4][x4-1] != 3 && gridArray2[y4][x4-1] != 6 && gridArray2[y4][x4-1] != 7)
+{
+	x4 = x4 - 1;
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+}
+else
+{
+lefttimestart = 0;
+}
+ if (37 in keyDown && gridArray2[y4][x4] == 5 && gridArray2[y4][x4-1] == 3)
+{
+	x4 = x4 - 1;
+	gridArray2[y4][x4] = 5;
+	gridArray2[y4][x4+1] = 3;
+}
+if (39 in keyDown && gridArray2[y4][x4+1] != 1 && gridArray2[y4][x4+1] != 3 && gridArray2[y4][x4+1] != 6 && gridArray2[y4][x4+1] != 7)
+{
+	x4 = x4 + 1;
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+}
+else
+{
+righttimestart = 0;
+}
+
+ if (39 in keyDown && gridArray2[y4][x4] == 5 && gridArray2[y4][x4+1] == 3)
+{
+	x4 = x4 + 1;
+	gridArray2[y4][x4] = 5;
+	gridArray2[y4][x4-1] = 3;
+}
+
+if (gridArray2[y4+1][x4] == 6)
+{
+	gridArray2[y4+1][x4] = 0;
+}	
+if (gridArray2[y4-1][x4] == 6)
+{
+	gridArray2[y4-1][x4] = 0;
+}	
+if (gridArray2[y4][x4+1] == 6)
+{
+	gridArray2[y4][x4+1] = 0;
+}	
+if (gridArray2[y4][x4-1] == 6)
+{
+	gridArray2[y4][x4-1] = 0;
+}
+timer = 0;
+}
+}
+
+if (gridArray2[7][18] == 0)
+{
+	cactusmap2[0] = 1;
+}
+if (gridArray2[7][8] == 0)
+{
+	cactusmap2[1] = 1;
+}
+if (gridArray2[18][1] == 0)
+{
+	cactusmap2[2] = 1;
+}
+
+if (cactusmap2[0] == 1 && cactusmap2[1] == 1 && cactusmap2[2] == 1)
+{
+	allcactus2 = 1;
+}
+
+randomnumber = Math.random();
+
+if (GameState == 3)
+{
+	if ((x4 - x9) < 1 && (x4 - x9) > -1 && (y4 - y9) < 1 && (y4 - y9) > -1)
+{
+	eating = 1;
+}
+texttimer3 = texttimer3 + 1;
+if (texttimer3 > 50 && texttimer3 < 1400)
+{
+textkeeper = 8;
+}
+if (texttimer3 > 1400 && GameState == 3)
+{
+textkeeper = 9;
+}
+
+if (gridArray3[10][9] == 0)
+{
+	cactusmap3[0] = 1;
+}
+if (gridArray3[4][16] == 0)
+{
+	cactusmap3[1] = 1;
+}
+
+if (cactusmap3[0] == 1 && cactusmap3[1] == 1)
+{
+	allcactus3 = 1;
+}
+
+	if (timer > 5)
+{
+if (38 in keyDown && gridArray3[y4-1][x4] != 1 && gridArray3[y4-1][x4] != 4 && gridArray3[y4-1][x4] != 3)
+{
+y4 = y4 - 1;
+}
+if (40 in keyDown && gridArray3[y4+1][x4] != 1 && gridArray3[y4+1][x4] != 4 && gridArray3[y4+1][x4] != 3)
+{
+y4 = y4 + 1;
+}
+if (37 in keyDown && gridArray3[y4][x4-1] != 1 && gridArray3[y4][x4-1] != 4 && gridArray3[y4][x4-1] != 3)
+{
+x4 = x4 - 1;
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+}
+else
+{
+lefttimestart = 0;
+}
+if (39 in keyDown && gridArray3[y4][x4+1] != 1 && gridArray3[y4][x4+1] != 4 && gridArray3[y4][x4+1] != 3)
+{
+x4 = x4 + 1;
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+}
+else
+{
+righttimestart = 0;
+}
+
+if (gridArray3[y4+1][x4] == 3)
+{
+	gridArray3[y4+1][x4] = 0;
+}	
+if (gridArray3[y4-1][x4] == 3)
+{
+	gridArray3[y4-1][x4] = 0;
+}	
+if (gridArray3[y4][x4+1] == 3)
+{
+	gridArray3[y4][x4+1] = 0;
+}	
+if (gridArray3[y4][x4-1] == 3)
+{
+	gridArray3[y4][x4-1] = 0;
+}	
+timer = 0;
+}
+if (timer2 > 9)
+{
+if (gridArray3[y9][x9-1] != 1 && gridArray3[y9][x9-1] != 4 && gridArray3[y9][x9-1] != 3)
+{
+if (x4 > 9)
+{
+x9 = x9 - 1;
+}
+}
+if (gridArray3[y9-1][x9] != 1 && gridArray3[y9-1][x9] != 4 && gridArray3[y9-1][x9] != 3)
+{
+if (y4 > 9)
+{
+y9 = y9 - 1;
+}
+}
+if (gridArray3[y9+1][x9] != 1 && gridArray3[y9+1][x9] != 4 && gridArray3[y9+1][x9] != 3)
+{
+if (y4 < 10)
+{
+y9 = y9 + 1;
+}
+}
+if (gridArray3[y9][x9+1] != 1 && gridArray3[y9][x9+1] != 4 && gridArray3[y9][x9+1] != 3)
+{
+if (x4 < 10)
+{
+x9 = x9 + 1;
+}
+}
+timer2 = 0;
+}
+
+}
+
+if (GameState == 4)
+{
+texttimer4 = texttimer4 + 1;
+if (texttimer4 > 50 && texttimer4 < 1400)
+{
+textkeeper = 10;
+}
+if (texttimer4 > 1400 && GameState == 4)
+{
+textkeeper = 11;
+}
+		if (timer > 5)
+	{
+	if (38 in keyDown && gridArray4[y4-1][x4] != 1 && gridArray4[y4-1][x4] != 4 && gridArray4[y4-1][x4] != 3 && movement == 1)
+	{
+	y4 = y4 - 1;
+	}
+	if (40 in keyDown && gridArray4[y4+1][x4] != 1 && gridArray4[y4+1][x4] != 4 && gridArray4[y4+1][x4] != 3 && movement == 1)
+	{
+	y4 = y4 + 1;
+	}
+	if (37 in keyDown && gridArray4[y4][x4-1] != 1 && gridArray4[y4][x4-1] != 4 && gridArray4[y4][x4-1] != 3 && movement == 1)
+	{
+	x4 = x4 - 1;
+	lefttimestart = 1;
+	movingleft = 1;
+	movingright = 0;
+	movingup = 0;
+	movingdown = 0;
+	}
+	else 
+	{
+	lefttimestart = 0;
+	}
+	if (39 in keyDown && gridArray4[y4][x4+1] != 1 && gridArray4[y4][x4+1] != 4 && gridArray4[y4][x4+1] != 3 && movement == 1)
+	{
+	x4 = x4 + 1;
+	righttimestart = 1;
+	movingleft = 0;
+	movingright = 1;
+	movingup = 0;
+	movingdown = 0;
+	}
+	else
+	{
+	righttimestart = 0;
+	}	
+	timer = 0;
+	}
+	if (timer3 > 1)
+		{
+		
+		if (x4 == x10 && y4 == y10)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y10][x10-1] == 1 || gridArray4[y10][x10-1] == 4)
+			{
+			birdswitch = 1;
+			}
+			if (gridArray4[y10][x10+1] == 1 || gridArray4[y10][x10+1] == 4)
+			{
+			birdswitch = 0;
+			}
+			if (gridArray4[y10][x10-1] != 1 && gridArray4[y10][x10-1] != 4 && birdswitch == 0)
+			{
+				x10 = x10 - 1;
+			}
+			if (gridArray4[y10][x10+1] != 1 && gridArray4[y10][x10+1] != 4 && birdswitch == 1)
+			{
+				x10 = x10 + 1;
+			}
+			
+			if (x4 == x11 && y4 == y11)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y11][x11-1] == 1 || gridArray4[y11][x11-1] == 4)
+			{
+			birdswitch2 = 1;
+			}
+			if (gridArray4[y11][x11+1] == 1 || gridArray4[y11][x11+1] == 4)
+			{
+			birdswitch2 = 0;
+			}
+			if (gridArray4[y11][x11-1] != 1 && gridArray4[y11][x11-1] != 4 && birdswitch2 == 0)
+			{
+				x11 = x11 - 1;
+			}
+			if (gridArray4[y11][x11+1] != 1 && gridArray4[y11][x11+1] != 4 && birdswitch2 == 1)
+			{
+				x11 = x11 + 1;
+			}
+			
+			if (x4 == x12 && y4 == y12)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y12][x12-1] == 1 || gridArray4[y12][x12-1] == 4)
+			{
+			birdswitch3 = 1;
+			}
+			if (gridArray4[y12][x12+1] == 1 || gridArray4[y12][x12+1] == 4)
+			{
+			birdswitch3 = 0;
+			}
+			if (gridArray4[y12][x12-1] != 1 && gridArray4[y12][x12-1] != 4 && birdswitch3 == 0)
+			{
+				x12 = x12 - 1;
+			}
+			if (gridArray4[y12][x12+1] != 1 && gridArray4[y12][x12+1] != 4 && birdswitch3 == 1)
+			{
+				x12 = x12 + 1;
+			}
+			
+			if (x4 == x13 && y4 == y13)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y13][x13-1] == 1 || gridArray4[y13][x13-1] == 4)
+			{
+			birdswitch4 = 1;
+			}
+			if (gridArray4[y13][x13+1] == 1 || gridArray4[y13][x13+1] == 4)
+			{
+			birdswitch4 = 0;
+			}
+			if (gridArray4[y13][x13-1] != 1 && gridArray4[y13][x13-1] != 4 && birdswitch4 == 0)
+			{
+				x13 = x13 - 1;
+			}
+			if (gridArray4[y13][x13+1] != 1 && gridArray4[y13][x13+1] != 4 && birdswitch4 == 1)
+			{
+				x13 = x13 + 1;
+			}
+			
+			if (x4 == x14 && y4 == y14)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y14][x14-1] == 1 || gridArray4[y14][x14-1] == 4)
+			{
+			birdswitch5 = 1;
+			}
+			if (gridArray4[y14][x14+1] == 1 || gridArray4[y14][x14+1] == 4)
+			{
+			birdswitch5 = 0;
+			}
+			if (gridArray4[y14][x14-1] != 1 && gridArray4[y14][x14-1] != 4 && birdswitch5 == 0)
+			{
+				x14 = x14 - 1;
+			}
+			if (gridArray4[y14][x14+1] != 1 && gridArray4[y14][x14+1] != 4 && birdswitch5 == 1)
+			{
+				x14 = x14 + 1;
+			}
+			
+			if (x4 == x15 && y4 == y15)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y15][x15-1] == 1 || gridArray4[y15][x15-1] == 4)
+			{
+			birdswitch6 = 1;
+			}
+			if (gridArray4[y15][x15+1] == 1 || gridArray4[y15][x15+1] == 4)
+			{
+			birdswitch6 = 0;
+			}
+			if (gridArray4[y15][x15-1] != 1 && gridArray4[y15][x15-1] != 4 && birdswitch6 == 0)
+			{
+				x15 = x15 - 1;
+			}
+			if (gridArray4[y15][x15+1] != 1 && gridArray4[y15][x15+1] != 4 && birdswitch6 == 1)
+			{
+				x15 = x15 + 1;
+			}
+			
+			if (x4 == x16 && y4 == y16)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y16][x16-1] == 1 || gridArray4[y16][x16-1] == 4)
+			{
+			birdswitch7 = 1;
+			}
+			if (gridArray4[y16][x16+1] == 1 || gridArray4[y16][x16+1] == 4)
+			{
+			birdswitch7 = 0;
+			}
+			if (gridArray4[y16][x16-1] != 1 && gridArray4[y16][x16-1] != 4 && birdswitch7 == 0)
+			{
+				x16 = x16 - 1;
+			}
+			if (gridArray4[y16][x16+1] != 1 && gridArray4[y16][x16+1] != 4 && birdswitch7 == 1)
+			{
+				x16 = x16 + 1;
+			}
+			
+			if (x4 == x17 && y4 == y17)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y17][x17-1] == 1 || gridArray4[y17][x17-1] == 4)
+			{
+			birdswitch8 = 1;
+			}
+			if (gridArray4[y17][x17+1] == 1 || gridArray4[y17][x17+1] == 4)
+			{
+			birdswitch8 = 0;
+			}
+			if (gridArray4[y17][x17-1] != 1 && gridArray4[y17][x17-1] != 4 && birdswitch8 == 0)
+			{
+				x17 = x17 - 1;
+			}
+			if (gridArray4[y17][x17+1] != 1 && gridArray4[y17][x17+1] != 4 && birdswitch8 == 1)
+			{
+				x17 = x17 + 1;
+			}
+			
+			if (x4 == x18 && y4 == y18)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y18][x18-1] == 1 || gridArray4[y18][x18-1] == 4)
+			{
+			birdswitch9 = 1;
+			}
+			if (gridArray4[y18][x18+1] == 1 || gridArray4[y18][x18+1] == 4)
+			{
+			birdswitch9 = 0;
+			}
+			if (gridArray4[y18][x18-1] != 1 && gridArray4[y18][x18-1] != 4 && birdswitch9 == 0)
+			{
+				x18 = x18 - 1;
+			}
+			if (gridArray4[y18][x18+1] != 1 && gridArray4[y18][x18+1] != 4 && birdswitch9 == 1)
+			{
+				x18 = x18 + 1;
+			}
+			
+			if (x4 == x19 && y4 == y19)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y19][x19-1] == 1 || gridArray4[y19][x19-1] == 4)
+			{
+			birdswitch10 = 1;
+			}
+			if (gridArray4[y19][x19+1] == 1 || gridArray4[y19][x19+1] == 4)
+			{
+			birdswitch10 = 0;
+			}
+			if (gridArray4[y19][x19-1] != 1 && gridArray4[y19][x19-1] != 4 && birdswitch10 == 0)
+			{
+				x19 = x19 - 1;
+			}
+			if (gridArray4[y19][x19+1] != 1 && gridArray4[y19][x19+1] != 4 && birdswitch10 == 1)
+			{
+				x19 = x19 + 1;
+			}
+			
+			if (x4 == x20 && y4 == y20)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y20][x20-1] == 1 || gridArray4[y20][x20-1] == 4)
+			{
+			birdswitch11 = 1;
+			}
+			if (gridArray4[y20][x20+1] == 1 || gridArray4[y20][x20+1] == 4)
+			{
+			birdswitch11 = 0;
+			}
+			if (gridArray4[y20][x20-1] != 1 && gridArray4[y20][x20-1] != 4 && birdswitch11 == 0)
+			{
+				x20 = x20 - 1;
+			}
+			if (gridArray4[y20][x20+1] != 1 && gridArray4[y20][x20+1] != 4 && birdswitch11 == 1)
+			{
+				x20 = x20 + 1;
+			}
+			
+			if (x4 == x21 && y4 == y21)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y21][x21-1] == 1 || gridArray4[y21][x21-1] == 4)
+			{
+			birdswitch12 = 1;
+			}
+			if (gridArray4[y21][x21+1] == 1 || gridArray4[y21][x21+1] == 4)
+			{
+			birdswitch12 = 0;
+			}
+			if (gridArray4[y21][x21-1] != 1 && gridArray4[y21][x21-1] != 4 && birdswitch12 == 0)
+			{
+				x21 = x21 - 1;
+			}
+			if (gridArray4[y21][x21+1] != 1 && gridArray4[y21][x21+1] != 4 && birdswitch12 == 1)
+			{
+				x21 = x21 + 1;
+			}
+			
+			if (x4 == x22 && y4 == y22)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y22][x22-1] == 1 || gridArray4[y22][x22-1] == 4)
+			{
+			birdswitch13 = 1;
+			}
+			if (gridArray4[y22][x22+1] == 1 || gridArray4[y22][x22+1] == 4)
+			{
+			birdswitch13 = 0;
+			}
+			if (gridArray4[y22][x22-1] != 1 && gridArray4[y22][x22-1] != 4 && birdswitch13 == 0)
+			{
+				x22 = x22 - 1;
+			}
+			if (gridArray4[y22][x22+1] != 1 && gridArray4[y22][x22+1] != 4 && birdswitch13 == 1)
+			{
+				x22 = x22 + 1;
+			}
+			
+			if (x4 == x23 && y4 == y23)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y23][x23-1] == 1 || gridArray4[y23][x23-1] == 4)
+			{
+			birdswitch14 = 1;
+			}
+			if (gridArray4[y23][x23+1] == 1 || gridArray4[y23][x23+1] == 4)
+			{
+			birdswitch14 = 0;
+			}
+			if (gridArray4[y23][x23-1] != 1 && gridArray4[y23][x23-1] != 4 && birdswitch14 == 0)
+			{
+				x23 = x23 - 1;
+			}
+			if (gridArray4[y23][x23+1] != 1 && gridArray4[y23][x23+1] != 4 && birdswitch14 == 1)
+			{
+				x23 = x23 + 1;
+			}
+			
+			if (x4 == x24 && y4 == y24)
+		{
+		x4 = 9;
+		y4 = 18;
+		}
+		    if (gridArray4[y24][x24-1] == 1 || gridArray4[y24][x24-1] == 4)
+			{
+			birdswitch15 = 1;
+			}
+			if (gridArray4[y24][x24+1] == 1 || gridArray4[y24][x24+1] == 4)
+			{
+			birdswitch15 = 0;
+			}
+			if (gridArray4[y24][x24-1] != 1 && gridArray4[y24][x24-1] != 4 && birdswitch15 == 0)
+			{
+				x24 = x24 - 1;
+			}
+			if (gridArray4[y24][x24+1] != 1 && gridArray4[y24][x24+1] != 4 && birdswitch15 == 1)
+			{
+				x24 = x24 + 1;
+			}
+			timer3 = 0;
+		}
+		
+}
+
+CheckHit();
+}
+
+function gameloop()
+{
+clearthings();
+updatethings();
+drawthings();
+
+
+
+setTimeout(gameloop, 1000 / 60);
+}
+
+gameloop();
+</script>
+
+</br>
+<footer>
+</footer>
+</body>
+</html>

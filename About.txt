@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<title> Claude's Workshop Website </title>
+<link rel="stylesheet" href="style1.css" text="text/css">
+<html>
+<head>
+</head>
+<body>
+<div class="page">
+<header>
+<h1 class ="Lime" style="text-align:center"><strong> About </strong></h1>
+</header>
+<nav>
+<div class="button"><a class="Links" href="index.html">Home</a></div>
+<div class="button"><a class="Links" href="CU4005 Game Design/design.html">Game Design</a></div>
+<div class="button"><a class="Links" href="CU4006 Game Portofolio 1/programming.html">Game Portofolio</a></div>
+<div class="button"><a class="Links" href="CU4007 Computer Gaming Hardware Architecture/architecture.html">Hardware Architecture</a></div>
+<div class="button"><a class="Links" href="contact.html">Contact</a></div>
+</nav>
+</br>
+
+<p class="text"><strong></strong><p>
+<p class="text"><strong>...</strong></p>
+</div>
+<footer>
+</footer>
+</body>
+</html>

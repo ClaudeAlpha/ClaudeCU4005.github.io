@@ -1,0 +1,30 @@
+body {
+background-color: #4C4C4C;
+}
+.text {
+color: #1398A5;
+}
+.page {
+background-color: #525252;
+border: 12px;
+border-style: outset;
+border-color: #A0A5A5;
+height: 900px;
+}
+.Links {
+	color: #1398A5;
+	font-weight: bold;
+	text-decoration: none;
+}
+.Lime {
+	color: #1398A5;
+}
+.button {
+	border-style: ridge;
+	border-color: #A0A5A5;
+	background-color: #525252;
+	color: #1398A5;
+	width: 370px;
+	float: left;
+	text-align: center;
+}
