@@ -1,5 +1,0 @@
-Land Iguana (facing up, down, left, right)
-A prickly-pear cactus sprite
-Water sprite
-Centipede sprite (smaller than land iguana sprite)
-
